@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>TenClass - Jadwal Ruang</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 font-sans">
+
+  <header class="bg-indigo-600 text-white py-6 text-center shadow-md">
+    <h1 class="text-3xl font-bold">📌 Jadwal Pemakaian Ruang Teori</h1>
+    <p class="text-sm mt-2">SMKN 10 Jakarta</p>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-4 py-10">
+
+    <div class="bg-white p-6 rounded-2xl shadow-lg mb-8">
+      <form id="jadwalForm" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <input id="ruang" placeholder="Ruang Teori 1" class="border p-2 rounded-lg" required>
+        <input id="pemakai" placeholder="Pemakai" class="border p-2 rounded-lg" required>
+        <input id="kegiatan" placeholder="Kegiatan" class="border p-2 rounded-lg" required>
+        <input type="date" id="tanggal" class="border p-2 rounded-lg" required>
+        <input type="time" id="jamMulai" class="border p-2 rounded-lg" required>
+        <input type="time" id="jamSelesai" class="border p-2 rounded-lg" required>
+        <button type="submit" class="col-span-2 bg-indigo-600 text-white py-2 rounded-lg">Simpan</button>
+      </form>
+    </div>
+
+    <div class="overflow-x-auto bg-white shadow-lg rounded-2xl">
+      <table class="w-full text-sm text-left text-gray-700">
+        <thead class="bg-indigo-600 text-white">
+          <tr>
+            <th class="px-6 py-3">Ruang</th>
+            <th class="px-6 py-3">Pemakai</th>
+            <th class="px-6 py-3">Kegiatan</th>
+            <th class="px-6 py-3">Tanggal</th>
+            <th class="px-6 py-3">Jam</th>
+          </tr>
+        </thead>
+        <tbody id="jadwalTable"></tbody>
+      </table>
+    </div>
+  </main>
+
+  <script>
+    const API_URL = "http://localhost/tenclass/api.php";
+
+    async function loadJadwal() {
+      const res = await fetch(API_URL);
+      const data = await res.json();
+      const table = document.getElementById("jadwalTable");
+      table.innerHTML = "";
+      data.forEach(item => {
+        table.innerHTML += `
+          <tr class="border-b hover:bg-gray-50">
+            <td class="px-6 py-4 font-semibold">${item.ruang}</td>
+            <td class="px-6 py-4">${item.pemakai}</td>
+            <td class="px-6 py-4">${item.kegiatan}</td>
+            <td class="px-6 py-4">${item.tanggal}</td>
+            <td class="px-6 py-4">${item.jam_mulai} - ${item.jam_selesai}</td>
+          </tr>
+        `;
+      });
+    }
+
+    document.getElementById("jadwalForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const newItem = {
+        ruang: document.getElementById("ruang").value,
+        pemakai: document.getElementById("pemakai").value,
+        kegiatan: document.getElementById("kegiatan").value,
+        tanggal: document.getElementById("tanggal").value,
+        jam_mulai: document.getElementById("jamMulai").value,
+        jam_selesai: document.getElementById("jamSelesai").value
+      };
+      await fetch(API_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(newItem)
+      });
+      loadJadwal();
+      e.target.reset();
+    });
+
+    loadJadwal();
+  </script>
+</body>
+</html>
