@@ -24,7 +24,17 @@
 
   <main class="max-w-6xl mx-auto px-4 py-10">
 
-
+    <div class="bg-white p-6 rounded-2xl shadow-lg mb-8">
+      <form id="jadwalForm" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <input id="ruang" placeholder="Ruang Teori 1" class="border p-2 rounded-lg" required>
+        <input id="pemakai" placeholder="Pemakai" class="border p-2 rounded-lg" required>
+        <input id="kegiatan" placeholder="Kegiatan" class="border p-2 rounded-lg" required>
+        <input type="date" id="tanggal" class="border p-2 rounded-lg" required>
+        <input type="time" id="jamMulai" class="border p-2 rounded-lg" required>
+        <input type="time" id="jamSelesai" class="border p-2 rounded-lg" required>
+        <button type="submit" class="col-span-2 bg-indigo-600 text-white py-2 rounded-lg">Simpan</button>
+      </form>
+    </div>
 
     <div class="overflow-x-auto bg-white shadow-lg rounded-2xl">
       <table class="w-full text-sm text-left text-gray-700">

@@ -2,54 +2,45 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>TenClass - SMKN 10 Jakarta</title>
+  <title>Login Page</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-100 font-sans">
+<body class="h-screen flex items-center justify-center bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">
 
+  <div class="w-full max-w-md bg-white shadow-xl rounded-2xl p-8">
 
-  <nav class="bg-indigo-600 shadow-lg">
-    <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
+    <h2 class="text-3xl font-bold text-center text-gray-800 mb-6">Login</h2>
 
-      <h1 class="text-white text-2xl font-bold tracking-wide">
-        Ten<span class="text-yellow-300">Class</span>
-      </h1>
-
-
-      <div class="space-x-6 hidden md:flex">
-        <a href="#" class="text-white hover:text-yellow-300 transition">Home</a>
-        <a href="#" class="text-white hover:text-yellow-300 transition">Jadwal</a>
-        <a href="#" class="text-white hover:text-yellow-300 transition">Tentang</a>
-        <a href="#" class="text-white hover:text-yellow-300 transition">Login</a>
+    <form id="loginForm" class="space-y-5">
+      <div>
+        <label class="block text-sm font-medium text-gray-600">Username</label>
+        <input type="text" id="username" 
+          class="mt-1 w-full px-4 py-2 border rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition"
+          placeholder="Enter your username" required>
       </div>
-    </div>
-  </nav>
 
-
-  <section class="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white">
-    <div class="max-w-7xl mx-auto px-6 py-20 text-center">
-      <h2 class="text-4xl md:text-5xl font-extrabold mb-6">
-        Selamat Datang di <span class="text-yellow-300">TenClass</span>
-      </h2>
-      <p class="text-lg md:text-xl max-w-2xl mx-auto">
-        Platform jadwal kegiatan kelas SMKN 10 Jakarta.  
-        Atur, cek, dan pantau pemakaian kelas dengan mudah dan cepat.
-      </p>
-      <div class="mt-8 space-x-4">
-        <a href="login.html" class="bg-yellow-300 text-indigo-900 px-6 py-3 rounded-xl font-semibold shadow hover:bg-yellow-400 transition">
-          Login
-        </a>
-        <a href="jadwal.html" class="bg-white text-indigo-700 px-6 py-3 rounded-xl font-semibold shadow hover:bg-gray-100 transition">
-          Lihat Jadwal
-        </a>
+      <div>
+        <label class="block text-sm font-medium text-gray-600">Password</label>
+        <input type="password" id="password" 
+          class="mt-1 w-full px-4 py-2 border rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition"
+          placeholder="Enter your password" required>
       </div>
-    </div>
-  </section>
 
+      <button type="submit"
+        class="w-full bg-indigo-600 text-white py-2 rounded-xl font-semibold hover:bg-indigo-700 transition">
+        Login
+      </button>
+    </form>
 
-  <footer class="bg-indigo-700 text-white py-6 mt-16 text-center text-sm">
-    &copy; 2025 TenClass - SMKN 10 Jakarta. All rights reserved.
-  </footer>
+    <p id="result" class="mt-4 text-center text-sm text-gray-700"></p>
 
+    <a href="LandingPage.html">halo
+      
+    </a>
+
+    </p>
+  </div>
+
+  <script src="script.js"></script>
 </body>
 </html>
