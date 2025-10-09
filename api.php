@@ -6,7 +6,7 @@ header("Access-Control-Allow-Headers: Content-Type");
 
 class Database {
     private $host = "localhost";
-    private $db_name = "tenclass";
+    private $db_name = "TenClass";
     private $username = "root";
     private $password = "";
     public $conn;

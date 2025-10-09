@@ -6,7 +6,7 @@ header("Access-Control-Allow-Headers: Content-Type");
 
 class Database {
     private $host = "localhost";
-    private $db_name = "tenclass";
+    private $db_name = "TenClass";
     private $username = "root";
     private $password = "";
     public $conn;
@@ -35,7 +35,7 @@ $stmt = $db->prepare("SELECT * FROM users WHERE username = :username");
 $stmt->execute(["username" => $username]);
 $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-if ($user && password_verify($password, $user['password'])) {
+if ($user && $password === $user['password']) {
     echo json_encode(["success" => true, "message" => "Login berhasil"]);
 } else {
     echo json_encode(["success" => false, "message" => "Username atau password salah"]);
