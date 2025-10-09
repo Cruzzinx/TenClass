@@ -43,46 +43,30 @@
   </main>
 
   <script>
-    const API_URL = "http://localhost/tenclass/api.php";
-
+    const API_URL = "http://localhost:8000/api.php";
+  
     async function loadJadwal() {
-      const res = await fetch(API_URL);
-      const data = await res.json();
-      const table = document.getElementById("jadwalTable");
-      table.innerHTML = "";
-      data.forEach(item => {
-        table.innerHTML += `
-          <tr class="border-b hover:bg-gray-50">
-            <td class="px-6 py-4 font-semibold">${item.ruang}</td>
-            <td class="px-6 py-4">${item.pemakai}</td>
-            <td class="px-6 py-4">${item.kegiatan}</td>
-            <td class="px-6 py-4">${item.tanggal}</td>
-            <td class="px-6 py-4">${item.jam_mulai} - ${item.jam_selesai}</td>
-          </tr>
-        `;
-      });
-    }
+  const res = await fetch(API_URL);
+  const data = await res.json();
+  const table = document.getElementById("jadwalTable");
+  table.innerHTML = "";
 
-    document.getElementById("jadwalForm").addEventListener("submit", async (e) => {
-      e.preventDefault();
-      const newItem = {
-        ruang: document.getElementById("ruang").value,
-        pemakai: document.getElementById("pemakai").value,
-        kegiatan: document.getElementById("kegiatan").value,
-        tanggal: document.getElementById("tanggal").value,
-        jam_mulai: document.getElementById("jamMulai").value,
-        jam_selesai: document.getElementById("jamSelesai").value
-      };
-      await fetch(API_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(newItem)
-      });
-      loadJadwal();
-      e.target.reset();
-    });
+  data.forEach(item => {
+    table.innerHTML += `
+      <tr class="border-b hover:bg-gray-50">
+        <td class="px-6 py-4 font-semibold">Ruang ${item.room_id}</td>
+        <td class="px-6 py-4">User ${item.user_id}</td>
+        <td class="px-6 py-4">${item.class}</td>
+        <td class="px-6 py-4">${item.day}</td>
+        <td class="px-6 py-4">${item.start_session} - ${item.end_session}</td>
+      </tr>
+    `;
+  });
+}
 
+  
     loadJadwal();
   </script>
+  
 </body>
 </html>

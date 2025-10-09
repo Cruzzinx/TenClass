@@ -1,8 +1,15 @@
 <?php
 header("Content-Type: application/json");
 header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Methods: GET, POST");
+header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type");
+
+const API_URL = "http://localhost:8000/api.php";
+// Handle preflight
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    http_response_code(200);
+    exit();
+}
 
 class Database {
     private $host = "localhost";
@@ -14,11 +21,15 @@ class Database {
     public function connect() {
         $this->conn = null;
         try {
-            $this->conn = new PDO("mysql:host=".$this->host.";dbname=".$this->db_name,
-                                  $this->username, $this->password);
+            $this->conn = new PDO(
+                "mysql:host=".$this->host.";dbname=".$this->db_name,
+                $this->username,
+                $this->password
+            );
+            $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $this->conn->exec("set names utf8");
         } catch(PDOException $e) {
-            echo json_encode(["error" => $e->getMessage()]);
+            echo json_encode(["error" => "Koneksi DB gagal"]);
             exit;
         }
         return $this->conn;
@@ -27,14 +38,14 @@ class Database {
 
 class Jadwal {
     private $conn;
-    private $table = "ruang_kelas";
+    private $table = "schedule";
 
     public function __construct($db) {
         $this->conn = $db;
     }
 
     public function getAll() {
-        $query = "SELECT * FROM " . $this->table . " ORDER BY tanggal, jam_mulai";
+        $query = "SELECT * FROM " . $this->table . " ORDER BY day, start_session";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -42,8 +53,8 @@ class Jadwal {
 
     public function add($data) {
         $query = "INSERT INTO " . $this->table . " 
-                  (ruang, pemakai, kegiatan, tanggal, jam_mulai, jam_selesai)
-                  VALUES (:ruang, :pemakai, :kegiatan, :tanggal, :jam_mulai, :jam_selesai)";
+                  (room_id, user_id, class, day, start_session, end_session)
+                  VALUES (:room_id, :user_id, :class, :day, :start_session, :end_session)";
         $stmt = $this->conn->prepare($query);
         return $stmt->execute($data);
     }
@@ -64,4 +75,6 @@ if ($method === "GET") {
     } else {
         echo json_encode(["error" => "Gagal menambah jadwal"]);
     }
+} else {
+    echo json_encode(["error" => "Metode tidak didukung"]);
 }
